@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: client_data_validator
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+  datasource:
+    url: jdbc:postgresql://localhost:5432/client_validation
+    username: postgres
+    password: 12345
+    driverClassName: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+      schema: public
+      jpa:
+        show-sql: true
+        hibernate:
+          ddl-auto: none
+        properties:
+          hibernate:
+            format_sql: true
+            show_sql: true
+server:
+  port: 8083

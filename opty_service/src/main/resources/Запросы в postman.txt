@@ -1,0 +1,41 @@
+--Создание заявки:
+1. С верными данными:
+http://localhost:8081/optys
+{
+  "passportSeria": "QR2345",
+  "passportNumber": "901234567",
+  "firstName": "Ирина",
+  "lastName": "Иринова",
+  "middleName": "1",
+  "birthDate": "1995-09-09",
+  "gender": "Ж",
+  "maritalStatus": "Не замужем",
+  "omt": "OMT9",
+  "passportType": "Тип9",
+  "nationality": "Национальность9"
+}
+2. С частично верными данными:
+http://localhost:8081/optys
+{
+  "passportSeria": "QR2345",
+  "passportNumber": "901234567",
+  "firstName": "Ирина",
+  "lastName": "Иринова",
+  "middleName": "1",
+  "birthDate": "1995-09-09",
+  "gender": "Ж",
+  "maritalStatus": "Не замужем",
+  "omt": "OMT4",
+  "passportType": "Тип9",
+  "nationality": "Национальность5"
+}
+
+-- Кредитная история. Получить все новые запросы:
+http://localhost:8084/all
+
+
+--Кредитная история. Утвердить заявку (подставить optyId):
+http://localhost:8084/check?optyId=1&comment=Проверка пройдена успешно.&status=APPROVED
+
+--Кредитная история. Проверка не пройдена (любой статус помимо APPROVED):
+http://localhost:8084/check?optyId=1&comment=Проверка не пройдена.&status=BLOCKED
