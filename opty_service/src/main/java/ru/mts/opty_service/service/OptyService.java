@@ -6,6 +6,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.mts.data_models.ClientData;
 import ru.mts.data_models.OptyData;
+import ru.mts.opty_service.mapper.OptyDataMapper;
 import ru.mts.opty_service.model.Opty;
 import ru.mts.opty_service.model.OptyClient;
 import ru.mts.opty_service.repository.OptyClientRepository;
@@ -19,11 +20,12 @@ import java.util.UUID;
 public class OptyService {
     @Autowired
     private OptyRepository optyRepository;
-
     @Autowired
     private KafkaTemplate<String, OptyData> kafkaTemplate;
     @Autowired
     private OptyClientRepository optyClientRepository;
+    @Autowired
+    private OptyDataMapper optyDataMapper;
 
     @Transactional
     public void createOpty(ClientData clientData) {
@@ -31,19 +33,7 @@ public class OptyService {
         String optyId = UUID.randomUUID().toString();
         String receivedStatus = "RECEIVED";
 
-        OptyClient optyClient = new OptyClient();
-        optyClient.setId(UUID.randomUUID().toString());
-        optyClient.setFirstName(clientData.getFirstName());
-        optyClient.setLastName(clientData.getLastName());
-        optyClient.setMiddleName(clientData.getMiddleName());
-        optyClient.setGender(clientData.getGender());
-        optyClient.setBirthDate(clientData.getBirthDate());
-        optyClient.setPassportType(clientData.getPassportType());
-        optyClient.setPassportNumber(clientData.getPassportNumber());
-        optyClient.setPassportSeria(clientData.getPassportSeria());
-        optyClient.setMaritalStatus(clientData.getMaritalStatus());
-        optyClient.setOMT(clientData.getOMT());
-        optyClient.setNationality(clientData.getNationality());
+        OptyClient optyClient = optyDataMapper.toOptyClient(clientData);
 
         optyClientRepository.save(optyClient);
 

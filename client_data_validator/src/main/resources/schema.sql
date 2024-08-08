@@ -17,7 +17,7 @@ CREATE TABLE if not exists accounts (
       id VARCHAR(255) PRIMARY KEY,
       client_id VARCHAR(255),
       created VARCHAR(255),
-      FOREIGN KEY (client_id) REFERENCES client(id)
+      FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
 CREATE TABLE if not exists clients_checks(
